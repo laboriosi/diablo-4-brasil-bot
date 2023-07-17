@@ -7,39 +7,39 @@ export default new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
     .addOptions(
       {
         label: "Leveling",
-        value: "1110662832846020650",
-        emoji: "<:experience:1110602399434936401>",
+        value: "1130462390610305064",
+        emoji: "<:experience:1130464677143519332>",
       },
       {
         label: "PvP",
-        value: "1110662937162555523",
-        emoji: "<:pvp:1110604343830380574>",
+        value: "1130462625004793916",
+        emoji: "<:pvp:1130464983864582164>",
       },
       {
         label: "Helltide",
-        value: "1110663058654773379",
-        emoji: "<:helltide:1127274346755391578>",
+        value: "1130462442472865854",
+        emoji: "<:helltide:1130464900825759864>",
       },
       {
         label: "Dungeon",
-        value: "1110663493784436807",
-        emoji: "<:dungeon:1110583517114531870>",
+        value: "1130463075347202099",
+        emoji: "<:dungeon:1130464625964625941>",
       },
       {
         label: "Nightmare Dungeon",
-        value: "1110663234765205626",
-        emoji: "<:nightmare_dungeon:1110605351851659336>",
+        value: "1130463029650259988",
+        emoji: "<:nightmare_dungeon:1130464562743869480>",
       },
 
       {
         label: "World Boss",
-        value: "1112403692868616323",
-        emoji: "<:world_boss2:1110889291279761428>",
+        value: "1130463429405179924",
+        emoji: "<:world_boss:1130464300939624458>",
       },
       {
         label: "Hardcore",
-        value: "1112494172742619187",
-        emoji: "<:hardcore:1112493800422654032>",
+        value: "1130462885278134333",
+        emoji: "<:hardcore:1130464853899886692>",
       }
     )
 );

@@ -8,8 +8,6 @@ const localState = {};
 export default async (interaction: Interaction) => {
   try {
     const {
-      FORM_CATEGORY_ID: formCategoryId,
-      MEMBER_ROLE_ID: memberRoleId,
       LEVELING_ROLE_ID: levelingRoleId,
       PVP_ROLE_ID: pvpRoleId,
       HELLTIDE_ROLE_ID: helltideRoleId,
@@ -17,13 +15,6 @@ export default async (interaction: Interaction) => {
       NIGHTMARE_DUNGEON_ROLE_ID: nightmareDungeonRoleId,
       WORLD_BOSS_ROLE_ID: worldBossRoleId,
       HARDCORE_ROLE_ID: hardcoreRoleId,
-      TICKET_CATEGORY_ID: ticketCategoryId,
-      OFFICER_ROLE_ID: officerRoleId,
-      HELPER_ROLE_ID: helperRoleId,
-      RECRUITMENT_PENDING_ROLE_ID: recruitmentPendingRoleId,
-      VISITANT_ROLE_ID: visitantRoleId,
-      GENERAL_CHAT_ID: generalChatId,
-      MEMBERS_TEXT_CHANNEL_ID: membersTextChannelId,
       GROUP_TEXT_CHANNEL_ID: groupTextChannelId,
       CREATE_VOICE_CHANNEL_ID: createVoiceChannelId,
       GROUPS_CATEGORY_ID: groupsCategoryId,
@@ -76,30 +67,6 @@ export default async (interaction: Interaction) => {
         await interaction.showModal(groupDescriptionModal);
       }
 
-      if (interaction.customId === "approve") {
-        interaction.deferUpdate();
-        const [embed] = interaction.message.embeds;
-        const [, , discordId] = embed.fields;
-        const member = await interaction.guild.members.fetch(discordId.value);
-        await member.roles.add(memberRoleId);
-        await member.roles.add(recruitmentPendingRoleId);
-        await member.roles.remove(pendingApproveRoleId);
-
-        const generalChat = await interaction.guild.channels.fetch(generalChatId);
-
-        if (generalChat.type === ChannelType.GuildText) {
-          await generalChat.send({
-            content: `Bem vindo, nephalem <@${member.id}>!`,
-          });
-        }
-        await interaction.message.delete();
-      }
-
-      if (interaction.customId === "deny") {
-        interaction.deferUpdate();
-        interaction.message.delete();
-      }
-
       if (interaction.customId === "leveling") {
         interaction.deferUpdate();
         const member = await interaction.guild.members.fetch(interaction.user.id);
@@ -120,7 +87,7 @@ export default async (interaction: Interaction) => {
         }
       }
 
-      if (interaction.customId === "helltideRoleId") {
+      if (interaction.customId === "helltide") {
         interaction.deferUpdate();
         const member = await interaction.guild.members.fetch(interaction.user.id);
         if (member.roles.cache.has(helltideRoleId)) {
@@ -170,89 +137,9 @@ export default async (interaction: Interaction) => {
         }
       }
 
-      if (interaction.customId === "refuseRules") {
-        interaction.reply({
-          ephemeral: true,
-          content: `Para receber o cargo de <@&${memberRoleId}> você deve ler e concordar com as regras`,
-        });
-      }
-
       if (interaction.customId === "close") {
         const channel = await interaction.channel.fetch();
         await channel.delete();
-      }
-
-      if (interaction.customId === "denounce") {
-        const channelName = `🎫┃denúncia-do-${user.username.toLowerCase()}`;
-
-        const createdChannel = await guild.channels.create({
-          name: channelName,
-          type: ChannelType.GuildText,
-          parent: ticketCategoryId,
-          permissionOverwrites: [
-            { id: member.id, allow: [PermissionsBitField.Default] },
-            { id: officerRoleId, allow: [PermissionsBitField.Default] },
-            { id: helperRoleId, allow: [PermissionsBitField.Default] },
-            { id: guild.roles.everyone, deny: [PermissionsBitField.All] },
-          ],
-        });
-
-        await createdChannel.send({ embeds: [denounceInfo], components: [closeChannelButton] });
-
-        interaction.reply({
-          ephemeral: true,
-          content: `Foi iniciado um ticket de denúncia, clique aqui <#${createdChannel.id}>`,
-        });
-      }
-
-      if (interaction.customId === "suggestion") {
-        const channelName = `🎫┃sugestão-do-${user.username.toLowerCase()}`;
-
-        const createdChannel = await guild.channels.create({
-          name: channelName,
-          type: ChannelType.GuildText,
-          parent: ticketCategoryId,
-          permissionOverwrites: [
-            { id: member.id, allow: [PermissionsBitField.Default] },
-            { id: officerRoleId, allow: [PermissionsBitField.Default] },
-            { id: helperRoleId, allow: [PermissionsBitField.Default] },
-            { id: guild.roles.everyone, deny: [PermissionsBitField.All] },
-          ],
-        });
-
-        await createdChannel.send({ embeds: [suggestionInfo], components: [closeChannelButton] });
-
-        interaction.reply({
-          ephemeral: true,
-          content: `Foi iniciado um ticket de sugestão, clique aqui <#${createdChannel.id}>`,
-        });
-      }
-
-      if (interaction.customId === "readAndAgreeRules") {
-        const channelName = `📝┃form-do-${user.username.toLowerCase()}`;
-        const formChannel = guild.channels.cache.find((channel) => channel.name === channelName);
-
-        if (formChannel) {
-          interaction.reply({
-            ephemeral: true,
-            content: `Já existe um canal criado para seguir o próximo passo, clique aqui <#${formChannel.id}>`,
-          });
-        } else {
-          const createdChannel = await guild.channels.create({
-            name: channelName,
-            type: ChannelType.GuildText,
-            parent: formCategoryId,
-            permissionOverwrites: [
-              { id: member.id, allow: [PermissionsBitField.Default] },
-              { id: guild.roles.everyone, deny: [PermissionsBitField.All] },
-            ],
-          });
-
-          interaction.reply({
-            ephemeral: true,
-            content: `Foi iniciado um formulário para você prencher, clique aqui <#${createdChannel.id}>`,
-          });
-        }
       }
     }
   } catch (error) {
