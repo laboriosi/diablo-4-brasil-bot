@@ -1,0 +1,12 @@
+export { default as formQuestionBattleTag } from "./formQuestionBattleTag";
+export { default as formQuestionCellphone } from "./formQuestionCellphone";
+export { default as formInvalidCellphone } from "./formInvalidCellphone";
+export { default as formInvalidBattleTag } from "./formInvalidBattleTag";
+export { default as rules } from "./rules";
+export { default as rolesDescription } from "./rolesDescription";
+export { default as formSuccess } from "./formSuccess";
+export { default as formBattleTagCharacterLimit } from "./formBattleTagCharacterLimit";
+export { default as supportMessage } from "./supportMessage";
+export { default as suggestionInfo } from "./suggestionInfo";
+export { default as denounceInfo } from "./denounceInfo";
+export { default as shareGroupDescription } from "./shareGroupDescription";
